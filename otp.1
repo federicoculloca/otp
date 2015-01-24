@@ -1,0 +1,33 @@
+.TH otp 1 "Version 0.1" "USER COMMANDS"
+.SH NAME
+otp \- encrypt or decrypt a file using a one-time pad
+.SH SYNOPSIS
+.B otp
+origin_file key_file out_file
+.SH DESCRIPTION
+This utility encrypts or decrypts a file using a one-time pad, that is it takes
+.B origin_file
+as an input file, xor's its content with the head of the content of the
+.B key_file
+and writes the result to
+.B out_file
+erasing from
+.B key_file
+the used part of the key.
+.PP
+In practice, this means that if
+.B origin_file
+is N bytes long, N bytes will be used and subsequently erased from
+.B key_file
+.SH SECURITY CONSIDERATIONS
+You should pay attention to the following considerations:
+.PP
+1) The original file is
+.B NOT
+erased, you have to manually dispose of it
+.PP
+2) The erasure of the key is in no way guaranteed to be secure. That is, a sufficiently determined attacker can retrieve the used key by analyzing the memory support the key was stored on
+.PP
+3) During encrypion/decryption, parts of the key are stored in memory (i.e.: RAM). An attacker could be observing the memory locations containing the key.
+.SH AUTHORS
+Federico klez Culloca <klez at mes3hacklab dot org>
